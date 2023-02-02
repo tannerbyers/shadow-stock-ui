@@ -40,6 +40,9 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
+          <button>
+            <a href="/addStock"> Add Stock</a>
+          </button>
           <p>
             created with &nbsp;
             <code className={styles.code}>
