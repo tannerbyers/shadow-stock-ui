@@ -12,15 +12,24 @@ type stockData = {
 export default function Home() {
   const [input, setInput] = useState("");
   const [data, setData] = useState<stockData | null>(null);
+  const [error, setError] = useState<string>("");
 
   const getStockData = (stockTicker: string) => {
     console.log("get stock data called");
     fetch(
-      `https://o2lx9o2209.execute-api.us-east-1.amazonaws.com/api/v1/stock?ticker=${stockTicker}`
+      `https://rmlqm75bw7.execute-api.us-west-1.amazonaws.com/api/v1/stock?ticker=${stockTicker}`
     )
       .then((res) => res.json())
       .then((data) => {
-        setData(data.Item);
+        if (data?.Item) {
+          setError("");
+          setData(data.Item);
+        } else {
+          setError("This ticker is not currently stored");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
       });
   };
 
@@ -40,7 +49,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div className={styles.description}>
-          <button>
+          <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
             <a href="/addStock"> Add Stock</a>
           </button>
           <p>
@@ -57,24 +66,39 @@ export default function Home() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            type="text"
+            className="form-control p-2 mr-2  border-solid border-2 rounded-2xl focus:outline-none placeholder:text-black "
+            type="search"
             id="stock"
             name="stock"
+            placeholder="enter ticker here"
           />
-          <button onClick={() => getStockData(input)}>Search</button>
+          <button
+            className="mt-3 bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+            onClick={() => getStockData(input)}
+          >
+            Search
+          </button>
         </div>
+        {error && <h3>{error}</h3>}
         {data && (
-          <div>
-            <h3>Ticker</h3>
-            <p>{data.ticker.S}</p>
-            <h3>Close Price</h3>
-            <p>{data.close_price.N}</p>
-            <h3>Open Price</h3>
-
-            <p>{data.open_price.N}</p>
-            <h3>Date & Time</h3>
-            <p>{new Date(parseInt(data.date_time.N, 10)).toString()}</p>
-          </div>
+          <table className="table-auto">
+            <thead>
+              <tr>
+                <th>Ticker</th>
+                <th>Close Price</th>
+                <th>Open Price</th>
+                <th>Date & Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{data.ticker.S}</td>
+                <td>${data.close_price.N}</td>
+                <td>${data.open_price.N}</td>
+                <td>{new Date(parseInt(data.date_time.N, 10)).toString()}</td>
+              </tr>
+            </tbody>
+          </table>
         )}
         <div className={styles.grid}></div>
       </main>

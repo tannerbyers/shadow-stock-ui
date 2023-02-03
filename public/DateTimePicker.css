@@ -88,8 +88,10 @@
   cursor: pointer;
 }
 
-.react-datetime-picker__button:enabled:hover .react-datetime-picker__button__icon,
-.react-datetime-picker__button:enabled:focus .react-datetime-picker__button__icon {
+.react-datetime-picker__button:enabled:hover
+  .react-datetime-picker__button__icon,
+.react-datetime-picker__button:enabled:focus
+  .react-datetime-picker__button__icon {
   stroke: #0078d7;
 }
 
