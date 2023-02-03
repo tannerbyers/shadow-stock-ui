@@ -1,6 +1,7 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import { useState } from "react";
+import Link from "next/link";
 
 type stockData = {
   ticker: { S: string };
@@ -50,7 +51,7 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.description}>
           <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-            <a href="/addStock"> Add Stock</a>
+            <Link href="/addStock"> Add Stock</Link>
           </button>
           <p>
             created with &nbsp;

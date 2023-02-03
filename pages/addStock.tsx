@@ -2,9 +2,11 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import React, { useState } from "react";
+    // @ts-ignore
 import DateTimePicker from "react-datetime-picker/dist/entry.nostyle";
+import Link from "next/link";
 
-const addStock = () => {
+const AddStock = () => {
   const [ticker, setTicker] = useState("");
   const [openPrice, setOpenPrice] = useState("");
   const [closePrice, setClosePrice] = useState("");
@@ -46,7 +48,7 @@ const addStock = () => {
       </Head>
       <div className={styles.description}>
         <button className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-          <a href="/"> Home</a>
+          <Link href="/"> Home</Link>
         </button>
         <p>
           created with &nbsp;
@@ -102,4 +104,4 @@ const addStock = () => {
   );
 };
 
-export default addStock;
+export default AddStock;
